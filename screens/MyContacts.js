@@ -12,32 +12,28 @@ const MyContacts = ({navigation}) => {
     const isFocused = useIsFocused();
 const [myContacts, setMyContacts] = useState([]);
 
-// useEffect(() => {
-//     getAllContacts();
-// }, [isFocused])
+useEffect(() => {
+    getAllContacts();
+}, [isFocused])
 
    async function getAllContacts(){
         try {
             const permission = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-                {
-                    'title': 'Contacts',
-                    'message': 'This app would like to view your contacts.',
-                    'buttonPositive': 'Please accept bare mortal'
-                  }
+                PermissionsAndroid.PERMISSIONS.READ_CONTACTS
                 
             );
            
             if(permission === 'granted'){
                 const contacts = await Contacts.getAll();
-                console.log(contacts)
+                console.log(contacts);
                 setMyContacts(contacts);
             }
+           
         }
         catch(error){
             console.log(error);
         }
-        getAllContacts();
+        
     }
 
   return (
@@ -48,6 +44,12 @@ const [myContacts, setMyContacts] = useState([]);
       size={62}
       color='green'
       onPress={() => navigation.navigate('CreateContact')}
+      />
+      <Ionicons 
+      name='apps-outline'
+      size={62}
+      color='grey'
+      onPress={() => navigation.navigate('Profile')}
       />
       
     </View>
